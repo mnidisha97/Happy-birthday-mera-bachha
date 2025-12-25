@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Birthday Surprise</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f0e6f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    transition: background 0.5s;
+  }
+  #passwordScreen, #giftScreen, #cupScreen, #cakeScreen, #letterScreen {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  #passwordScreen { display: flex; }
+  input { padding: 10px; font-size: 16px; margin-top: 10px; border-radius: 5px; }
+  button { padding: 10px 15px; font-size: 16px; margin-top: 10px; cursor: pointer; border-radius: 5px; }
+  #giftBox {
+    width: 200px;
+    height: 200px;
+    background: red;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    transition: transform 0.5s;
+  }
+  #giftBox:hover { transform: scale(1.1) rotate(-5deg); }
+  #ribbon {
+    width: 10px;
+    height: 100%;
+    background: gold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: ribbonWave 1s infinite alternate;
+  }
+  @keyframes ribbonWave {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(10deg); }
+  }
+  .cup {
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border-radius: 10px;
+    margin: 10px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid #000;
+    perspective: 1000px;
+    transition: transform 0.3s;
+  }
+  .cup:hover { transform: scale(1.1); }
+  .flip {
+    transform: rotateY(180deg);
+    transition: transform 0.6s;
+  }
+  .cake {
+    width: 250px;
+    height: 150px;
+    background: pink;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    transition: transform 0.3s;
+  }
+  .cake:hover { transform: scale(1.1) rotate(-5deg); }
+  #letter img {
+    max-width: 300px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+</style>
+</head>
+<body>
+
+<!-- Password Screen -->
+<div id="passwordScreen">
+  <h2>Enter Password to Open</h2>
+  <input type="password" id="passwordInput" placeholder="Password">
+  <button onclick="checkPassword()">Open</button>
+</div>
+
+<!-- Gift Box Screen -->
+<div id="giftScreen">
+  <h2>Click the Ribbon to Open Gift</h2>
+  <div id="giftBox" onclick="openGift()">
+    <div id="ribbon"></div>
+    🎁
+  </div>
+</div>
+
+<!-- Cup Screen -->
+<div id="cupScreen">
+  <h2>Pick a Cup</h2>
+  <div class="cup" id="cup1">?</div>
+  <div class="cup" id="cup2">?</div>
+</div>
+
+<!-- Cake Screen -->
+<div id="cakeScreen">
+  <h2>Click the Cake to Cut</h2>
+  <div class="cake" onclick="openLetter()">🎂</div>
+</div>
+
+<!-- Letter Screen -->
+<div id="letterScreen">
+  <h2>Special Letter for You</h2>
+  <img src="your-photo.jpg" alt="Photo">
+  <p>
+    Happiest birthday mera bachha ♥️<br>
+    I'm sorry apka birthday especial nahi kar sakti mai but I hope ki isse ap kuch second ke liye hi smile karo apko pta hai na apki smile meri favourite hai...
+    <!-- Full message -->
+  </p>
+  <audio id="romanticTune" loop>
+    <source src="romantic-tune.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+function checkPassword() {
+  const input = document.getElementById('passwordInput').value;
+  if(input === 'Avisha') {
+    document.getElementById('passwordScreen').style.display = 'none';
+    document.getElementById('giftScreen').style.display = 'flex';
+  } else {
+    alert('Wrong password! Try again.');
+  }
+}
+
+function openGift() {
+  document.getElementById('giftBox').style.transform = 'scale(0.8) rotate(20deg)';
+  setTimeout(() => {
+    document.getElementById('giftScreen').style.display = 'none';
+    document.getElementById('cupScreen').style.display = 'flex';
+  }, 500);
+}
+
+document.getElementById('cup1').addEventListener('click', () => {
+  alert('Isme nahi, dure mein apka surprise hai');
+});
+
+document.getElementById('cup2').addEventListener('click', () => {
+  document.getElementById('cup2').classList.add('flip');
+  setTimeout(() => {
+    let answer = prompt('Aapko mai kya keh ke bulati hu?');
+    if(answer.toLowerCase() === 'bachha') {
+      document.getElementById('cupScreen').style.display = 'none';
+      document.getElementById('cakeScreen').style.display = 'flex';
+    } else {
+      alert('Try again!');
+    }
+  }, 600);
+});
+
+function openLetter() {
+  document.getElementById('cakeScreen').style.display = 'none';
+  document.getElementById('letterScreen').style.display = 'flex';
+  document.body.style.background = '#ffe6f0';
+  document.getElementById('romanticTune').play();
+}
+</script>
+
+</body>
+</html>
